@@ -19,7 +19,6 @@
 
         <div id="glyphPaneContainer">
 
-
             <script>
                 document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_long_count(mdate["baktuns"], 'baktun', 'bundle'+(mdate["baktuns"]==1?'':'s')));
                 document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_long_count(mdate["katuns"], 'katun', 'score years'));
@@ -30,77 +29,99 @@
                 document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_haab(mdate["day"], mdate["month"]));
                 document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_single_g(mdate["g"]));
             </script>
-       
-            <!--
-            <% lc = @mayan_date.long_count %>
-            <%= glyph_pair_long_count(lc[4], 'baktun', "bundle#{(lc[4] == 1)?'':'s'}")%>
-            <%= glyph_pair_long_count(lc[3], 'katun', 'score years')%>
-            <%= glyph_pair_long_count(lc[2], 'tun', "year#{(lc[2] == 1)?'':'s'}")%>
-            <%= glyph_pair_long_count(lc[1], 'winal', 'score days')%>
-            <%= glyph_pair_long_count(lc[0], 'kin', "day#{(lc[0] == 1)?'':'s'}")%>
-            
-            <%= glyph_pair_tzolkin(@mayan_date.tzolkin_trecena, @mayan_date.tzolkin_name)%>
-            <%= glyph_pair_haab(@mayan_date.haab_day, @mayan_date.haab_name)%>
-
-            <%= glyph_single_g(@mayan_date.glyph_g)%>
-            -->
 
         </div>
 
-        <!--
         <div id="dateFormContainer">
-            <%= form_with(url: home_path, method: "get", local: true, html: {id: 'dateFormLongCount'}) do %>
-                <%= number_field_tag('lc[baktun]', lc[4], min: 0, max: 19)%>
-                <%= content_tag(:span, '.')%>
-                <%= number_field_tag('lc[katun]', lc[3], min: 0, max: 19)%>
-                <%= content_tag(:span, '.')%>
-                <%= number_field_tag('lc[tun]', lc[2], min: 0, max: 19)%>
-                <%= content_tag(:span, '.')%>
-                <%= number_field_tag('lc[winal]', lc[1], min: 0, max: 17)%>
-                <%= content_tag(:span, '.')%>
-                <%= number_field_tag('lc[kin]', lc[0], min: 0, max: 19)%>
+            <form id="dateFormLongCount">
+                <input name="baktuns" type="number" min=0 max=19 size=1>
+                <span>.</span>
+                <input name="katuns" type="number" min=0 max=19 size=1>
+                <span>.</span>
+                <input name="tuns" type="number" min=0 max=19 size=1>
+                <span>.</span>
+                <input name="winals" type="number" min=0 max=17 size=1>
+                <span>.</span>
+                <input name="kins" type="number" min=0 max=19 size=1>
+
                 <br />
-                <%= content_tag(:span, "#{print_calendar_round(@mayan_date)}")%>
+                <span id="calendarRoundLabel"></span>
                 <br />
-                <%= submit_tag("Calculate from Long Count")%>
-            <% end %>
+                <input type="submit" value="Calculate from Long Count">
+            </form>
+
+            <script>
+                document.forms['dateFormLongCount'].elements["baktuns"].value = mdate["baktuns"]
+                document.forms['dateFormLongCount'].elements["katuns"].value = mdate["katuns"]
+                document.forms['dateFormLongCount'].elements["tuns"].value = mdate["tuns"]
+                document.forms['dateFormLongCount'].elements["winals"].value = mdate["winals"]
+                document.forms['dateFormLongCount'].elements["kins"].value = mdate["kins"]
+
+                document.getElementById("calendarRoundLabel").innerHTML = mdate["trecena"] + ' ' + fancyname[mdate["veintena"]] + ' ' + mdate["day"] + ' ' + fancyname[mdate["month"]] + ' G' + mdate["g"]
+            </script>
+
 
             <div id="dateFormIs">
                 is
             </div>
 
-            <%= form_with(url: home_path, method: "get", local: true, html: {id: 'dateFormGregorian'}) do %>
-                <% gdt = @mayan_date.gregorian %>
-                <% bce = gdt.year < 0 %>
-                <% gdt = Date.new(bce ? 1 - gdt.year : gdt.year, gdt.month, gdt.day)%>
 
-                <%= number_field_tag('date[day]', gdt.day, min: 0, max: 31)%>
-                <%= select_tag('date[month]', options_for_select(['January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'].map.with_index { |x, i| [x, i + 1] }.to_h, gdt.month))%>
-                <%= number_field_tag('date[year]', gdt.year, min: 0)%>
-                <%= select_tag('date[era]', options_for_select(['CE', 'BCE'], bce ? 'BCE' : 'CE'))%>
+            <form id="dateFormGregorian">
+                <input name="gday" type="number" size=1 min=1 max=31>
+                <select name="gmonth">
+                    <option value=1>January</option>
+                    <option value=2>February</option>
+                    <option value=3>March</option>
+                    <option value=4>April</option>
+                    <option value=5>May</option>
+                    <option value=6>June</option>
+                    <option value=7>July</option>
+                    <option value=8>August</option>
+                    <option value=9>September</option>
+                    <option value=10>October</option>
+                    <option value=11>November</option>
+                    <option value=12>December</option>
+                </select>
+                <input name="gyear" type="number" size=3 min=0>
+                <select name="gera">
+                    <option value="ce">CE</option>
+                    <option value="bce">BCE</option>
+                </select>
                 <br />
-                <%= submit_tag("Calculate from Gregorian Date") %>
-            <% end %>
+                <input type="submit" value="Calculate from Gregorian Date">
+            </form>
 
-            <div id="dateFormButtons">        
-                <%= form_with(url: home_path, method: "get", local: true) do %>
-                    <%= hidden_field_tag('mdc', @mayan_date.mayan_day - 1)%>
-                    <%= submit_tag("-1 Day")%>
-                <% end %>
-                <button onclick="location.href='/'">Today</button>
-                <%= form_with(url: home_path, method: "get", local: true) do %>
-                    <%= hidden_field_tag('mdc', @mayan_date.mayan_day + 1)%>
-                    <%= submit_tag("+1 Day")%>
-                <% end %>
+            <script>
+                document.forms['dateFormGregorian'].elements["gday"].value = gdate["day"]
+                document.forms['dateFormGregorian'].elements["gmonth"].value = gdate["month"]
+                document.forms['dateFormGregorian'].elements["gyear"].value = gdate["year"]
+                document.forms['dateFormGregorian'].elements["gera"].value = gdate["era"]
+            </script>
+
+
+            <div id="dateFormButtons">
+                <form id="dateButtonBackwards">
+                    <input name="mdc" type="hidden">
+                    <input type="submit" value="-1 Day">
+                </form>
+                <form>
+                    <input type="submit" value="Today">
+                </form>
+                <form id="dateButtonForwards">
+                    <input name="mdc" type="hidden">
+                    <input type="submit" value="+1 Day">
+                </form>
+
+                <script>
+                    document.forms['dateButtonBackwards'].elements["mdc"].value = mdate["mdc"] - 1
+                    document.forms['dateButtonForwards'].elements["mdc"].value = mdate["mdc"] + 1
+                </script>
+
+
             </div>
+
         </div>
-        -->
-
     </div>
-
-
-
 
 </body>
 </html>                                                

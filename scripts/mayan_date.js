@@ -1,6 +1,8 @@
 // temp test obj
 
 var mdate = {
+    "mdc" : 0,
+
     "baktuns" : 1,
     "katuns" : 1,
     "tuns" : 1,
@@ -13,4 +15,11 @@ var mdate = {
     "month" : "sotz",
 
     "g" : 5, 
-}
+};
+
+var gdate = {
+    "day" : 1,
+    "month" : 1,
+    "year" : 1990,
+    "era" : 'ce',  
+};
