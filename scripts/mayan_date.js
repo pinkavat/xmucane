@@ -115,7 +115,8 @@ if (params.has('mdc')){
 
 } else {
     // Compute from Today's Date.
-    mdc = 0; // TODO TODO: TODAY'S DATE.
+    var date = new Date();
+    mdc = mdc_from_greg(date.getDate(), date.getMonth() + 1, date.getFullYear());
 
 }
 
