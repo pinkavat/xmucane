@@ -2,13 +2,105 @@
 <html>
 <head>
 
-   <link rel="stylesheet" href="stylesheets/xmucane.css">
+    <title>Xmucane</title>
+
+    <link rel="stylesheet" href="stylesheets/xmucane.css">
+    <link rel="stylesheet" href="stylesheets/glyph_pane.css">
+
+    <script src="scripts/mayan_date.js"></script>
+    <script src="scripts/translations.js"></script>
+    <script src="scripts/glyph_pane.js"></script>
 </head>
 
 
 <body>
 
-    
+    <div id="dateCalculatorContainer">
+
+        <div id="glyphPaneContainer">
+
+
+            <script>
+                document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_long_count(mdate["baktuns"], 'baktun', 'bundle'+(mdate["baktuns"]==1?'':'s')));
+                document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_long_count(mdate["katuns"], 'katun', 'score years'));
+                document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_long_count(mdate["tuns"], 'tun', 'year'+(mdate["tuns"]==1?'':'s')));
+                document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_long_count(mdate["winals"], 'winal', 'score days'));
+                document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_long_count(mdate["kins"], 'kin', 'day'+(mdate["kins"]==1?'':'s')));
+                document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_tzolkin(mdate["trecena"], mdate["veintena"]));
+                document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_pair_haab(mdate["day"], mdate["month"]));
+                document.getElementById("glyphPaneContainer").insertAdjacentHTML("beforeend", glyph_single_g(mdate["g"]));
+            </script>
+       
+            <!--
+            <% lc = @mayan_date.long_count %>
+            <%= glyph_pair_long_count(lc[4], 'baktun', "bundle#{(lc[4] == 1)?'':'s'}")%>
+            <%= glyph_pair_long_count(lc[3], 'katun', 'score years')%>
+            <%= glyph_pair_long_count(lc[2], 'tun', "year#{(lc[2] == 1)?'':'s'}")%>
+            <%= glyph_pair_long_count(lc[1], 'winal', 'score days')%>
+            <%= glyph_pair_long_count(lc[0], 'kin', "day#{(lc[0] == 1)?'':'s'}")%>
+            
+            <%= glyph_pair_tzolkin(@mayan_date.tzolkin_trecena, @mayan_date.tzolkin_name)%>
+            <%= glyph_pair_haab(@mayan_date.haab_day, @mayan_date.haab_name)%>
+
+            <%= glyph_single_g(@mayan_date.glyph_g)%>
+            -->
+
+        </div>
+
+        <!--
+        <div id="dateFormContainer">
+            <%= form_with(url: home_path, method: "get", local: true, html: {id: 'dateFormLongCount'}) do %>
+                <%= number_field_tag('lc[baktun]', lc[4], min: 0, max: 19)%>
+                <%= content_tag(:span, '.')%>
+                <%= number_field_tag('lc[katun]', lc[3], min: 0, max: 19)%>
+                <%= content_tag(:span, '.')%>
+                <%= number_field_tag('lc[tun]', lc[2], min: 0, max: 19)%>
+                <%= content_tag(:span, '.')%>
+                <%= number_field_tag('lc[winal]', lc[1], min: 0, max: 17)%>
+                <%= content_tag(:span, '.')%>
+                <%= number_field_tag('lc[kin]', lc[0], min: 0, max: 19)%>
+                <br />
+                <%= content_tag(:span, "#{print_calendar_round(@mayan_date)}")%>
+                <br />
+                <%= submit_tag("Calculate from Long Count")%>
+            <% end %>
+
+            <div id="dateFormIs">
+                is
+            </div>
+
+            <%= form_with(url: home_path, method: "get", local: true, html: {id: 'dateFormGregorian'}) do %>
+                <% gdt = @mayan_date.gregorian %>
+                <% bce = gdt.year < 0 %>
+                <% gdt = Date.new(bce ? 1 - gdt.year : gdt.year, gdt.month, gdt.day)%>
+
+                <%= number_field_tag('date[day]', gdt.day, min: 0, max: 31)%>
+                <%= select_tag('date[month]', options_for_select(['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'].map.with_index { |x, i| [x, i + 1] }.to_h, gdt.month))%>
+                <%= number_field_tag('date[year]', gdt.year, min: 0)%>
+                <%= select_tag('date[era]', options_for_select(['CE', 'BCE'], bce ? 'BCE' : 'CE'))%>
+                <br />
+                <%= submit_tag("Calculate from Gregorian Date") %>
+            <% end %>
+
+            <div id="dateFormButtons">        
+                <%= form_with(url: home_path, method: "get", local: true) do %>
+                    <%= hidden_field_tag('mdc', @mayan_date.mayan_day - 1)%>
+                    <%= submit_tag("-1 Day")%>
+                <% end %>
+                <button onclick="location.href='/'">Today</button>
+                <%= form_with(url: home_path, method: "get", local: true) do %>
+                    <%= hidden_field_tag('mdc', @mayan_date.mayan_day + 1)%>
+                    <%= submit_tag("+1 Day")%>
+                <% end %>
+            </div>
+        </div>
+        -->
+
+    </div>
+
+
+
 
 </body>
 </html>                                                
