@@ -1,0 +1,79 @@
+/* glyph pane */
+
+
+
+#glyphPaneContainer {
+    display: grid;
+    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-columns: auto auto;
+    max-width: 50vh;
+    margin: 0 auto 0 auto;
+}
+
+.glyphPairPane {
+    padding: 0;
+    margin: 0;
+    display: flex;  /* This shouldn't need to be flex but everything breaks if it isn't*/
+    flex-wrap: nowrap;
+    flex-direction: row;
+    position: relative;
+    &:hover .glyphOverlay{
+        opacity: 1;
+    }
+}
+
+.glyphOverlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100%;
+    opacity: 0;
+    transition: .2s ease;
+    background-color: Wheat;
+    border-radius: 5%;
+    text-align: center;
+    padding-top: 17%;
+    cursor: pointer;
+}
+
+.glyphPairL1 {
+    width: 25%;
+    &+img{
+        width:75%;
+    }
+}
+
+.glyphPairL2 {
+    width: 30%;
+    &+img{
+        width:70%; 
+    }
+}
+
+.glyphPairL3 {
+    width: 35%;
+    &+img{
+        width: 65%;
+    }
+}
+
+.glyphPairL4 {
+    width: 40%;
+    &+img{
+        width: 60%;
+    }
+}
+
+.glyphPairFull {
+    width: 100%;
+    &+img{
+        position: relative;
+        top: 10%;
+        left: -80%;
+        max-width: 60%;
+        max-height: 50%;
+    }
+}

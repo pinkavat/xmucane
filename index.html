@@ -1,143 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+   <link rel="stylesheet" href="stylesheets/xmucane.css">
 </head>
+
+
 <body>
-<input id="sizein" type="number" placeholder='Passage Length'>
-<br>
-<input id="clicktostart" type="button"> <br><br><span id="outputter"></span><br><br>
-<script>
-$("#clicktostart").click(function () {
-    //Alien language generator version 0.2
 
-    //Random word generator
-    randw = function (lengthmin, lengthmax) {
-        var newword = "";
-        var consonants = ["b", "b", "c", "c", "d", "d", "f", "f", "g", "g", "h", "h", "j", "k", "l", "l", "m", "m", "n", "n", "p", "p", "q", "r", "r", "s", "s", "t", "t", "v", "w", "x", "z"];
-        var vowels = ["a", "e", "e", "e", "e", "i", "o", "u", "y"];
-        var phonisms = ["th", "ph", "sh", "aa", "ee", "ii", "oo", "ll", "ss", "tt", "ff", "ie", "rr", "pt", ""];
-        var lengthvar = Math.floor(Math.random() * (lengthmax - lengthmin + 1) + lengthmin);
-
-        newletter = function (lastelement) {
-            switch (Math.floor(Math.random() * 11) + 1) {
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                    //Alternating vowels
-                    if (vowels.indexOf(lastelement) === -1) {
-                        //it's a consonant
-                        return vowels[Math.floor(Math.random() * vowels.length)];
-                    } else {
-                        //it's a vowel
-                        return consonants[Math.floor(Math.random() * consonants.length)];
-                    };
-                    break;
-                case 9:
-                    //Non-alternating vowels
-                    if (vowels.indexOf(lastelement) === -1) {
-                        //it's a consonant
-                        return consonants[Math.floor(Math.random() * consonants.length)];
-                    } else {
-                        //it's a vowel
-                        return vowels[Math.floor(Math.random() * vowels.length)];
-                    };
-                    break;
-                case 10:
-                case 11:
-                    //Phonisms
-                    return phonisms[Math.floor(Math.random() * phonisms.length)];
-                    break;
-            };
-        };
-
-        newword = newletter("a");
-        for (var i = 0; i < lengthvar - 1; i++) {
-            newword += newletter((newword.slice(-1)));
-        };
-        return newword;
-    };
     
-    //Make repeating words:
-    var repeatlist = [""]
-    for (var v = 0;v<20;v++){
-    repeatlist.push(randw(3, 6));
-    
-  };
 
-
-    //Sentence Generator
-    makesentence = function () {
-        var sentencelength = (Math.floor(Math.random() * 15) + 2)
-        var newsentence = "";
-        var punctuation = [",", ",", ",", ",", ",", ",", ",", ",", ";", ";", ";", ";", " --", " --", ":", " (" + randw(5, 7) + ")", " (" + randw(5, 7) + " " + randw(5, 7) + ")"];
-        for (var j = 0; j < sentencelength; j++) {
-            newsentence = newsentence += " ";
-            switch (Math.floor(Math.random() * 5) + 1) {
-                case 1:
-                case 2:
-                case 3:
-                    newsentence = newsentence += repeatlist[Math.floor(Math.random() * repeatlist.length)]
-                    break;
-                case 4:
-                case 5:
-                    newsentence = newsentence += randw(5, 7);
-
-                    break;
-            };
-            if (j < sentencelength - 2) {
-                if (Math.random() > 0.9) {
-                    newsentence = newsentence += punctuation[Math.floor(Math.random() * punctuation.length)];
-                };
-            };
-        };
-        switch (Math.floor(Math.random() * 11) + 1) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                newsentence = newsentence += ".";
-                break;
-            case 9:
-            case 10:
-                newsentence = newsentence += "!";
-                break;
-            case 11:
-                newsentence = newsentence += "?";
-                break;
-
-        };
-        newsentence = newsentence += "?";
-        var capital = newsentence.slice(1, 2);
-        capital = capital.toUpperCase();
-
-        newsentence = newsentence.slice(2, -1);
-        newsentence = capital + newsentence;
-        return newsentence;
-    };
-
-
-
-
-
-
-    console.clear();
-    var output = "";
-    for (var k = 0; k < $("#sizein").val(); k++) {
-        output = output + " " + makesentence();
-    };
-    console.log(output);
-    $("#outputter").html(output);
-});
-</script>
 </body>
 </html>                                                

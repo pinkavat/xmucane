@@ -1,0 +1,20 @@
+/* footer */
+
+$footer_gray: DarkGray;
+
+#footer {
+    flex-shrink: 0;
+    padding: 2px;
+    margin: 8px;
+    max-width: 100%;
+}
+
+#footer p{
+    text-align: center;
+    font-size: 0.5em;
+    border-top: 1px solid $footer_gray;
+    color: $footer_gray;
+    padding: 4px 0px 0px 0px;
+}
+
+
