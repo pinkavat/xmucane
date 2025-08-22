@@ -3,11 +3,20 @@
 
 
 #glyphPaneContainer {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+
+    aspect-ratio : 2/3;
+
     display: grid;
     grid-template-rows: 25% 25% 25% 25%;
     grid-template-columns: auto auto;
+
+    height : 80vh;
+    /*
     max-width: 50vh;
     margin: 0 auto 0 auto;
+    */
 }
 
 .glyphPairPane {
